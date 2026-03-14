@@ -1,7 +1,9 @@
-import { useState, useEffect } from "react";
 import "./App.css";
+import { useState, useEffect } from "react";
 import { TOTAL_GUESSES, WORD_LENGTH } from "./libs/consts";
-import PAROLE_ITALIANE from "./assets/PAROLE_ITALIANE";
+import { Toaster, toast } from "sonner";
+import { PAROLE_ITALIANE, PAROLACCE } from "./assets/PAROLE_ITALIANE";
+import WordLine from "./components/WordLine";
 
 function App() {
   const [guessedWords, setGuessedWords] = useState(
@@ -14,9 +16,13 @@ function App() {
   const [currentWord, setCurrentWord] = useState("     ");
   const [gameOver, setGameOver] = useState(false);
 
-  const availableWords = PAROLE_ITALIANE.filter(
+  const filteredWordsIta = PAROLE_ITALIANE.filter(
     (parola) => parola.length === WORD_LENGTH,
   );
+  const filteredBadWordsIta = PAROLACCE.filter(
+    (parola) => parola.length === WORD_LENGTH,
+  );
+  const availableWords = filteredWordsIta;
 
   function getWord() {
     const randomIndex = Math.floor(Math.random() * availableWords.length);
@@ -35,24 +41,31 @@ function App() {
   }, []);
 
   function handleEnter() {
-    if (!availableWords.includes(currentWord)) {
-      alert("Parola non valida");
-      return;
-    }
     if (currentWord === correctWord) {
-      if (words.find(currentWord)) setGameOver(true);
-      alert("YOU'VE WON!");
-      return;
+      if (availableWords.find((word) => word === currentWord)) {
+        toast.success("Hai vinto!");
+        setGameOver(true);
+        return;
+      }
     }
 
     if (currentWord !== correctWord && wordCount === TOTAL_GUESSES - 1) {
       setGameOver(true);
-      alert("YOU'VE LOST!");
+      toast.error("Hai perso!", { position: "top-center" });
+      toast.message(`Soluzione: ${correctWord.toUpperCase()}`, {
+        position: "bottom-center",
+        duration: 7000,
+      });
       return;
     }
-
     if (letterCount !== WORD_LENGTH) {
-      alert("Words must be five letters.");
+      toast.error(`La parola deve contenere ${WORD_LENGTH} lettere`, {
+        position: "top-center",
+      });
+      return;
+    }
+    if (!availableWords.includes(currentWord)) {
+      toast.error("Parola non valida", { position: "top-center" });
       return;
     }
 
@@ -109,21 +122,27 @@ function App() {
         return;
       }
     }
-
+    function handleEscape(e) {
+      if (e.key === "Escape") {
+        resetGame();
+      }
+      return;
+    }
     document.addEventListener("keydown", handleKeyDown);
 
     if (gameOver) {
       document.removeEventListener("keydown", handleKeyDown);
+      document.addEventListener("keydown", handleEscape);
     }
 
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener("keydown", handleEscape);
     };
   }, [handleEnter, handleBackspace, handleAlphabetical, gameOver]);
 
   function resetGame() {
     setGuessedWords(new Array(TOTAL_GUESSES).fill("     "));
-    // fetchWord();
     getWord();
     setWordCount(0);
     setLetterCount(0);
@@ -133,31 +152,44 @@ function App() {
 
   return (
     <div>
-      <span className="text-8xl text-white font-extrabold">WORDLE!</span>
-      {guessedWords.map((word, index) => {
-        if (index === wordCount) {
+      <Toaster
+        toastOptions={{
+          style: {
+            background: "#121213",
+            color: "white",
+          },
+        }}
+      />
+      <h1 className="text-6xl text-white font-extrabold select-none mb-2">
+        WORD/OLO!
+      </h1>
+      <div>
+        {guessedWords.map((word, index) => {
+          if (index === wordCount) {
+            return (
+              <WordLine
+                word={currentWord}
+                correctWord={correctWord}
+                correctLetterObject={correctLetterObject}
+                revealed={gameOver}
+                key={index}
+              />
+            );
+          }
           return (
             <WordLine
-              word={currentWord}
+              word={word}
               correctWord={correctWord}
               correctLetterObject={correctLetterObject}
-              revealed={false || gameOver}
+              revealed={index < wordCount ? true : false}
               key={index}
             />
           );
-        }
-        return (
-          <WordLine
-            word={word}
-            correctWord={correctWord}
-            correctLetterObject={correctLetterObject}
-            revealed={true}
-            key={index}
-          />
-        );
-      })}
+        })}
+      </div>
       <button
-        className="m-4 p-4 border-white hover:bg-gray-700 text-2xl font-semibold"
+        className="m-4 py-4 px-14 border-gray-300 rounded-full hover:border-gray-100 text-lg select-none"
+        onKeyDown={resetGame}
         onClick={(e) => {
           resetGame();
           e.target.blur();
@@ -165,36 +197,6 @@ function App() {
       >
         Reset Game
       </button>
-    </div>
-  );
-}
-
-function WordLine({ word, correctWord, correctLetterObject, revealed }) {
-  return (
-    <div className="flex flex-row space-x-2 m-4">
-      {word.split("").map((letter, index) => {
-        const hasCorrectLocation = letter === correctWord[index];
-        const hasCorrectLetter = letter in correctLetterObject;
-
-        return (
-          <LetterBox
-            letter={letter}
-            green={hasCorrectLocation && hasCorrectLetter && revealed}
-            yellow={!hasCorrectLocation && hasCorrectLetter && revealed}
-            key={index}
-          />
-        );
-      })}
-    </div>
-  );
-}
-
-function LetterBox({ letter, green, yellow }) {
-  return (
-    <div
-      className={`w-24 h-24 border-4 border-black  text-black text-6xl ${green ? "bg-green-500" : yellow ? "bg-yellow-500" : "bg-white"}`}
-    >
-      {letter}
     </div>
   );
 }
