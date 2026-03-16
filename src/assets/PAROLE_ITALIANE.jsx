@@ -17,6 +17,7 @@ const PAROLE_ITALIANE = [
   "e",
   "che",
   "al",
+  "frego",
   "da",
   "a",
   "un",

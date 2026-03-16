@@ -45,7 +45,7 @@ function App() {
   });
 
   return (
-    <div>
+    <div className="w-full max-w-[1280px] mx-auto h-full flex flex-col gap-15 sm:gap-0 sm:justify-center">
       <Toaster
         toastOptions={{
           style: {
@@ -54,14 +54,14 @@ function App() {
           },
         }}
       />
-      <h1 className="text-5xl text-white font-extrabold select-none mb-8">
+      <h1 className="text-4xl sm:text-5xl text-white font-extrabold select-none mb-6 sm:mb-8">
         {
           <TextMorph duration={1200}>
             {gameOver ? correctWord.toUpperCase() : "WORDOL!"}
           </TextMorph>
         }
       </h1>
-      <div className="mb-8">
+      <div className="mb-6 sm:mb-8">
         {guessedWords.map((word, index) => {
           if (index === wordCount) {
             return (

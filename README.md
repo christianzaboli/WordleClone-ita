@@ -9,8 +9,10 @@ con dati di parole italiane trovate da https://github.com/titorossi/Anki_Project
 
 # 🌐 Demo Live
 
+https://wordol.vercel.app
+
 <p align="center">
-  <img src="./preview/wordol.png" width="800"/>
+  <img src="./preview/wordol-main.png" width="800"/>
 </p>
 
 <p align="center">

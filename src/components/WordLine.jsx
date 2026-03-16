@@ -39,7 +39,7 @@ export default function WordLine({
 
   if (keyboard) {
     return (
-      <div className="flex flex-row space-x-2 m-2 justify-center">
+      <div className="flex flex-row justify-center gap-0.5 sm:gap-2 my-1 sm:m-2">
         {word.map((letter, index) => {
           const isInSolution = correctWord.split("").includes(letter);
           const isInGuesses = guessedWords
@@ -73,7 +73,7 @@ export default function WordLine({
   const letterStatuses = getLetterStatuses(word, correctWord);
 
   return (
-    <div className="flex flex-row space-x-2 m-2 justify-center">
+    <div className="flex flex-row justify-center gap-1 sm:gap-2 my-1 sm:m-2">
       {word.split("").map((letter, index) => {
         const { green, yellow } = letterStatuses[index];
 
