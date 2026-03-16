@@ -7,7 +7,7 @@ con dati di parole italiane trovate da https://github.com/titorossi/Anki_Project
 (trovare un dizionario italiano online é impossibile, ancora tutt'ora aggiungo parole quando capita)
 
 # 🌐 Demo Live
-
+https://wordol.vercel.app
 
 
 <p align="center">
