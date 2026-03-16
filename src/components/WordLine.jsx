@@ -3,12 +3,40 @@ import LetterBox from "./LetterBox";
 export default function WordLine({
   word,
   correctWord,
-  correctLetterObject,
   guessedWords,
   revealed,
   keyboard = false,
   onKeyPress,
 }) {
+  function getLetterStatuses(guessWord, solutionWord) {
+    const guessLetters = guessWord.split("");
+    const solutionLetters = solutionWord.split("");
+
+    const remainingLetters = {};
+    solutionLetters.forEach((letter) => {
+      remainingLetters[letter] = (remainingLetters[letter] || 0) + 1;
+    });
+
+    const statuses = guessLetters.map(() => ({ green: false, yellow: false }));
+
+    guessLetters.forEach((letter, index) => {
+      if (letter === solutionLetters[index]) {
+        statuses[index].green = true;
+        remainingLetters[letter] -= 1;
+      }
+    });
+
+    guessLetters.forEach((letter, index) => {
+      if (statuses[index].green) return;
+      if (!remainingLetters[letter]) return;
+
+      statuses[index].yellow = true;
+      remainingLetters[letter] -= 1;
+    });
+
+    return statuses;
+  }
+
   if (keyboard) {
     return (
       <div className="flex flex-row space-x-2 m-2 justify-center">
@@ -41,16 +69,19 @@ export default function WordLine({
       </div>
     );
   }
+
+  const letterStatuses = getLetterStatuses(word, correctWord);
+
   return (
     <div className="flex flex-row space-x-2 m-2 justify-center">
       {word.split("").map((letter, index) => {
-        const hasCorrectLocation = letter === correctWord[index];
-        const hasCorrectLetter = letter in correctLetterObject;
+        const { green, yellow } = letterStatuses[index];
+
         return (
           <LetterBox
             letter={letter}
-            green={hasCorrectLocation && hasCorrectLetter && revealed}
-            yellow={!hasCorrectLocation && hasCorrectLetter && revealed}
+            green={green && revealed}
+            yellow={yellow && revealed}
             revealed={revealed}
             key={index}
             keyboard={keyboard}

@@ -12,7 +12,7 @@ export default function LetterBox({
     if (yellow && !green) return "bg-yellow-500";
     if (missed && !yellow) return "bg-slate-700";
     if (!green && !yellow && revealed && !keyboard) return "bg-slate-600";
-    if (keyboard && !yellow & !green & !missed) return "bg-gray-500";
+    if (keyboard && !yellow && !green && !missed) return "bg-gray-500";
     return "bg-transparent";
   }
   if (keyboard) {

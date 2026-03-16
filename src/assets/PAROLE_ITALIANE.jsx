@@ -10400,6 +10400,7 @@ const PAROLE_ITALIANE = [
   "bulla",
   "butta",
   "pesto",
+  "posto",
 ];
 
 export default PAROLE_ITALIANE;
