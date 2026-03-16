@@ -1,8 +1,38 @@
-# React + Vite
+# Wordol
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+---
+Progettino pensato come ambiente di apprendimento di TailwindCSS
+completamente funzionante parallelo all'originale,
+con dati di parole italiane trovate da https://github.com/titorossi/Anki_Project 
+(trovare un dizionario italiano online é impossibile, ancora tutt'ora aggiungo parole quando capita)
 
-Currently, two official plugins are available:
+# 🌐 Demo Live
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+
+
+<p align="center">
+  <img src="./preview/wordol.png" width="800"/>
+</p>
+
+---
+
+# 🧰 Tech Stack
+
+* React
+* Vite
+* JavaScript
+* TailWindCSS 3.4
+* Sonner + Torph per gestire toast e titolo
+
+### Deploy
+
+* Frontend → Vercel
+
+---
+
+#  Possibili miglioramenti futuri
+
+* Sistema di autenticazione utenti
+* Impostazione SOLO PAROLACCE CATTIVE
+* Storico performance
+* Animazioni UX 
