@@ -11,7 +11,7 @@ con dati di parole italiane trovate da https://github.com/titorossi/Anki_Project
 
 
 <p align="center">
-  <img src="./preview/wordol.png" width="800"/>
+  <img src="./preview/wordol-main.png" width="800"/>
 </p>
 
 ---
