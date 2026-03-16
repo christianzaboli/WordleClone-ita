@@ -11,10 +11,11 @@ export default function LetterBox({
 }) {
   const { trigger } = useWebHaptics();
   function backgroundColor() {
-    if (green) return "bg-green-500";
-    if (yellow && !green) return "bg-yellow-500";
-    if (missed && !yellow) return "bg-slate-700";
-    if (!green && !yellow && revealed && !keyboard) return "bg-slate-600";
+    if (green) return "bg-[#538D4E] border-[#538D4E]";
+    if (yellow && !green) return "bg-[#B59F3B] border-[#B59F3B]";
+    if (missed && !yellow) return "bg-slate-700 border-slate-700";
+    if (!green && !yellow && revealed && !keyboard)
+      return "bg-slate-600 border-slate-600";
     if (keyboard && !yellow && !green && !missed) return "bg-gray-500";
     return "bg-transparent";
   }
@@ -25,7 +26,7 @@ export default function LetterBox({
           border-[1px] border-gray-600
            text-white text-base sm:text-2xl 
            flex justify-center items-center font-bold select-none hover:cursor-pointer hover:border-white ${backgroundColor()}
-           rounded-md sm:rounded-lg m-[2px]
+           rounded-[4px] sm:rounded-md m-[2px]
            `}
         onClick={(e) => {
           onClick(letter);
@@ -40,7 +41,7 @@ export default function LetterBox({
   return (
     <div
       className={`w-16 h-16 sm:w-16 sm:h-16 border-[1px] border-gray-600 text-white text-3xl sm:text-4xl flex justify-center items-center font-bold select-none ${backgroundColor()}
-      rounded-sm sm:rounded-lg m-[1px] sm:m-0`}
+       sm:m-0`}
     >
       {letter.toUpperCase()}
     </div>

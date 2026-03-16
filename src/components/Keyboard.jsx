@@ -12,7 +12,7 @@ export default function Keyboard({
   guessedWords,
 }) {
   return (
-    <div className="mt-8 sm:mt-0">
+    <div className="mt-6 sm:mt-0">
       <WordLine
         word={upperKeys}
         correctWord={correctWord}

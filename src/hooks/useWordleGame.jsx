@@ -56,7 +56,9 @@ export default function useWordleGame({
     }
     if (currentWord === correctWord) {
       if (availableWords.find((word) => word === currentWord)) {
-        toast.success("Hai vinto!", { position: "top-left" });
+        if (window.screenX > 640) {
+          toast.success("Hai vinto!", { position: "top-left" });
+        }
         trigger([{ duration: 30 }, { delay: 60, duration: 40, intensity: 1 }]);
         setGameOver(true);
         return;
@@ -65,11 +67,22 @@ export default function useWordleGame({
 
     if (currentWord !== correctWord && wordCount === totalGuesses - 1) {
       setGameOver(true);
-      toast.error("Hai perso!", { position: "top-left" });
+      if (window.screenX > 640) {
+        toast.error("Hai perso!", { position: "top-left" });
+      }
       trigger([{ duration: 25 }], { intensity: 0.7 });
       return;
     }
-
+    if (guessedWords.includes(currentWord)) {
+      toast.error(`Parola giá presente`, {
+        position: "top-left",
+      });
+      trigger([
+        { duration: 80, intensity: 0.8 },
+        { delay: 80, duration: 50, intensity: 0.3 },
+      ]);
+      return;
+    }
     if (letterCount !== wordLength) {
       toast.error(`La parola deve contenere ${wordLength} lettere`, {
         position: "top-left",
