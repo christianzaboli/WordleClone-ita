@@ -16,7 +16,7 @@ con dati di parole italiane trovate da https://github.com/titorossi/Anki_Project
 
 ---
 
-# 🧰 Tech Stack
+# Tech Stack
 
 * React
 * Vite
