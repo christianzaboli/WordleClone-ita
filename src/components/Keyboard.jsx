@@ -10,7 +10,13 @@ export default function Keyboard({
   correctLetterObject,
   onKeyPress,
   guessedWords,
+  revealedPosition,
 }) {
+  const hintedLetter =
+    revealedPosition !== null && correctWord
+      ? correctWord[revealedPosition]
+      : null;
+
   return (
     <div className="mt-6 sm:mt-0">
       <WordLine
@@ -21,6 +27,7 @@ export default function Keyboard({
         revealed={revealed}
         keyboard={true}
         onKeyPress={onKeyPress}
+        hintedLetter={hintedLetter}
       />
       <WordLine
         word={middleKeys}
@@ -30,6 +37,7 @@ export default function Keyboard({
         revealed={revealed}
         keyboard={true}
         onKeyPress={onKeyPress}
+        hintedLetter={hintedLetter}
       />
       <WordLine
         word={bottomKeys}
@@ -39,6 +47,7 @@ export default function Keyboard({
         revealed={revealed}
         keyboard={true}
         onKeyPress={onKeyPress}
+        hintedLetter={hintedLetter}
       />
     </div>
   );

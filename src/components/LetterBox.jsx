@@ -6,6 +6,7 @@ export default function LetterBox({
   yellow,
   missed,
   revealed,
+  hinted = false,
   animateReveal = false,
   revealDelay = 0,
   keyboard = false,
@@ -18,6 +19,8 @@ export default function LetterBox({
     if (missed && !yellow) return "bg-slate-700 border-slate-700";
     if (!green && !yellow && revealed && !keyboard)
       return "bg-slate-600 border-slate-600";
+    if (hinted && !green && !yellow && !missed)
+      return "bg-transparent border-cyan-500 border-2";
     if (keyboard && !yellow && !green && !missed) return "bg-gray-500";
     return "bg-transparent";
   }

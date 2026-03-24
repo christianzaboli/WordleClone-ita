@@ -37,6 +37,9 @@ function App() {
     handleVirtualKey,
     handleSettingsModal,
     showSettingsModal,
+    revealedPosition,
+    hintUsed,
+    requestHint,
   } = useWordleGame({
     availableWords,
     wordLength,
@@ -92,8 +95,9 @@ function App() {
         guessedWords={guessedWords}
         correctLetterObject={correctLetterObject}
         onKeyPress={handleVirtualKey}
+        revealedPosition={revealedPosition}
       />
-      {NavHUD(handleSettingsModal, resetGame)}
+      {NavHUD(handleSettingsModal, resetGame, requestHint, hintUsed, gameOver)}
 
       {showSettingsModal &&
         SettingsModal(

@@ -7,6 +7,7 @@ export default function WordLine({
   revealed,
   keyboard = false,
   onKeyPress,
+  hintedLetter = null,
 }) {
   function getLetterStatuses(guessWord, solutionWord) {
     const guessLetters = guessWord.split("");
@@ -53,6 +54,9 @@ export default function WordLine({
 
           const hasMissedLetter = isInGuesses && !isInSolution;
 
+          const isHinted =
+            hintedLetter && hintedLetter.toLowerCase() === letter.toLowerCase();
+
           return (
             <LetterBox
               letter={letter}
@@ -60,6 +64,7 @@ export default function WordLine({
               yellow={hasTypedCorrectLetter}
               missed={hasMissedLetter}
               revealed={revealed}
+              hinted={isHinted}
               key={index}
               keyboard={keyboard}
               onClick={onKeyPress}

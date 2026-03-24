@@ -19,6 +19,8 @@ export default function useWordleGame({
   const [currentWord, setCurrentWord] = useState(() => wordLengthInput);
   const [gameOver, setGameOver] = useState(false);
   const [showSettingsModal, setShowSettingsModal] = useState(false);
+  const [revealedPosition, setRevealedPosition] = useState(null);
+  const [hintUsed, setHintUsed] = useState(false);
 
   const getWord = useCallback(() => {
     if (!availableWords.length) {
@@ -46,7 +48,37 @@ export default function useWordleGame({
     setLetterCount(0);
     setCurrentWord(wordLengthInput);
     setGameOver(false);
+    setRevealedPosition(null);
+    setHintUsed(false);
   }, [getWord, totalGuesses, wordLengthInput]);
+
+  const requestHint = useCallback(() => {
+    if (hintUsed || gameOver || !correctWord) return;
+
+    const unrevealedPositions = [];
+    for (let i = 0; i < correctWord.length; i++) {
+      const letterCorrectlyGuessed = guessedWords.some(
+        (word, wordIdx) => wordIdx < wordCount && word[i] === correctWord[i],
+      );
+      if (!letterCorrectlyGuessed) {
+        unrevealedPositions.push(i);
+      }
+    }
+
+    if (unrevealedPositions.length === 0) return;
+
+    const randomIdx = Math.floor(Math.random() * unrevealedPositions.length);
+    const position = unrevealedPositions[randomIdx];
+
+    setRevealedPosition(position);
+    setHintUsed(true);
+
+    const letter = correctWord[position].toUpperCase();
+    toast.success(`Lettera ${position + 1}: ${letter}`, {
+      position: "top-left",
+      duration: 3000,
+    });
+  }, [hintUsed, gameOver, correctWord, guessedWords, wordCount]);
 
   const handleEnter = useCallback(() => {
     if (gameOver) return;
@@ -218,5 +250,8 @@ export default function useWordleGame({
     handleVirtualKey,
     showSettingsModal,
     handleSettingsModal,
+    revealedPosition,
+    hintUsed,
+    requestHint,
   };
 }
