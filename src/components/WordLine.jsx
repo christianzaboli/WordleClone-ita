@@ -83,6 +83,8 @@ export default function WordLine({
             green={green && revealed}
             yellow={yellow && revealed}
             revealed={revealed}
+            animateReveal={revealed}
+            revealDelay={index * 150}
             key={index}
             keyboard={keyboard}
           />

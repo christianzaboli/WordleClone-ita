@@ -6,6 +6,8 @@ export default function LetterBox({
   yellow,
   missed,
   revealed,
+  animateReveal = false,
+  revealDelay = 0,
   keyboard = false,
   onClick,
 }) {
@@ -27,6 +29,7 @@ export default function LetterBox({
            text-white text-base sm:text-2xl 
            flex justify-center items-center font-bold select-none hover:cursor-pointer hover:border-white ${backgroundColor()}
            rounded-[4px] sm:rounded-md m-[2px]
+           transform-gpu transition-transform duration-100 ease-out active:scale-90
            `}
         onClick={(e) => {
           onClick(letter);
@@ -41,7 +44,8 @@ export default function LetterBox({
   return (
     <div
       className={`w-16 h-16 sm:w-16 sm:h-16 border-[1px] border-gray-600 text-white text-3xl sm:text-4xl flex justify-center items-center font-bold select-none ${backgroundColor()}
-       sm:m-0`}
+       sm:m-0 ${animateReveal ? "wordline-reveal" : ""}`}
+      style={animateReveal ? { animationDelay: `${revealDelay}ms` } : undefined}
     >
       {letter.toUpperCase()}
     </div>
